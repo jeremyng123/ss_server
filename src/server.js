@@ -13,7 +13,7 @@ const Role = db.role;
 
 db.mongoose
   .connect(
-    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@${dbConfig.HOST}/${dbConfig.DB}`,
+    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@${dbConfig.HOST}`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
