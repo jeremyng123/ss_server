@@ -20,7 +20,7 @@ module.exports = function (app) {
   );
 
   app.post("/login", controller.login);
-  app.post("/getUser", (req, res, next) => {
+  app.get("/getUser", (req, res, next) => {
     let token = req.headers["x-access-token"];
 
     if (!token) {
