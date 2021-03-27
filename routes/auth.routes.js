@@ -20,4 +20,20 @@ module.exports = function (app) {
   );
 
   app.post("/login", controller.login);
+  app.post("/getUser", (req, res, next) => {
+    let token = req.headers["x-access-token"];
+
+    if (!token) {
+      return res.status(403).send({ message: "No token provided!" });
+    }
+
+    jwt.verify(token, config.secret, (err, user) => {
+      if (err) {
+        return res.status(401).send({ message: "Unauthorized!" });
+      }
+      req.user = user;
+      console.log(user);
+      return res.status(200).send(user);
+    });
+  });
 };
