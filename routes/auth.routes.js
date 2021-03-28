@@ -21,8 +21,8 @@ module.exports = function (app) {
 
   app.post("/login", controller.login);
   app.get("/getUser", (req, res, next) => {
-    let token = req.headers["x-access-token"];
-    console.log("token: " + JSON.stringify(req.headers));
+    let token = req.headers.authorization;
+    console.log("token: " + token);
     if (!token) {
       return res.status(403).send({ message: "No token provided!" });
     }
