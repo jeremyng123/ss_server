@@ -54,6 +54,7 @@ module.exports = async function (app) {
           if (!user) {
             return res.status(404).send({ message: "User Not found." });
           }
+          var authorities = [];
           for (let i = 0; i < user.roles.length; i++) {
             authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
           }
