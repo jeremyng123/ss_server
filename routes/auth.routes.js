@@ -34,7 +34,7 @@ module.exports = async function (app) {
       return res.status(403).send({ message: "No token provided!" });
     }
 
-    jwt.verify(bearertoken, config.secret, (err, user) => {
+    jwt.verify(bearertoken, config.secret, async function (err, user) {
       if (err) {
         console.log(err);
         console.log(user);
@@ -42,8 +42,7 @@ module.exports = async function (app) {
       }
       const query = User.findOne({
         id: user.id,
-      })
-        .populate("roles", "-__v");
+      }).populate("roles", "-__v");
       await query
         .exec((err, user) => {
           if (err) {
@@ -57,7 +56,7 @@ module.exports = async function (app) {
           for (let i = 0; i < user.roles.length; i++) {
             authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
           }
-          
+
           return {
             id: user._id,
             username: user.username,
@@ -65,11 +64,10 @@ module.exports = async function (app) {
             roles: authorities,
             accessToken: token,
           };
-        }).then(
-          (theuser) => {
-            req.user = theuser
-          }
-        );
+        })
+        .then((theuser) => {
+          req.user = theuser;
+        });
       console.log("user: " + JSON.stringify(user));
       console.log("req.user: " + JSON.stringify(req.user));
       return res.status(200).send(user);
