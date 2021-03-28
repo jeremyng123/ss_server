@@ -6,7 +6,7 @@ const db = require("../models");
 const User = db.user;
 const Role = db.role;
 
-module.exports = function (app) {
+module.exports = async function (app) {
   app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
