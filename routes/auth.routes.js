@@ -76,18 +76,18 @@ module.exports = async function (app) {
             roles: authorities,
             accessToken: bearertoken,
           });
-          return {
+          return res.status(200).send({
             id: user._id,
             username: user.username,
             email: user.email,
             roles: authorities,
             accessToken: bearertoken,
-          };
+          });
         });
-      req.user = query;
-      console.log("query: " + JSON.stringify(query));
-      console.log("req.user: " + JSON.stringify(req.user));
-      return res.status(200).send(query);
+      // req.user = query;
+      // console.log("query: " + JSON.stringify(query));
+      // console.log("req.user: " + JSON.stringify(req.user));
+      // return
     });
   });
 };
