@@ -74,7 +74,7 @@ module.exports = async function (app) {
             username: user.username,
             email: user.email,
             roles: authorities,
-            accessToken: token,
+            accessToken: bearertoken,
           };
         });
       req.user = query;
