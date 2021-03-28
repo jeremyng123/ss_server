@@ -23,13 +23,15 @@ module.exports = function (app) {
 
   app.post("/login", controller.login);
   app.get("/getUser", (req, res, next) => {
-    let token = req.headers.authorization;
-    console.log("token: " + token);
-    if (!token) {
+    let bearerheader = req.headers.authorization;
+    console.log("token: " + bearerheader);
+    const bearer = bearerheader.split(" ");
+    const bearertoken = bearer[1];
+    if (!bearertoken) {
       return res.status(403).send({ message: "No token provided!" });
     }
 
-    jwt.verify(token, config.secret, (err, user) => {
+    jwt.verify(bearertoken, config.secret, (err, user) => {
       if (err) {
         console.log(err);
         console.log(user);
