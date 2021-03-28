@@ -41,7 +41,7 @@ module.exports = async function (app) {
         return res.status(401).send({ message: "Unauthorized!" });
       }
       console.log("verify user: " + user.id);
-      const query = await User.findOne({
+      const query = await User.findById({
         id: user.id,
       })
         .populate("roles", "-__v")
