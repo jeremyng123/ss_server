@@ -31,6 +31,8 @@ module.exports = function (app) {
 
     jwt.verify(token, config.secret, (err, user) => {
       if (err) {
+        console.log(err);
+        console.log(user);
         return res.status(401).send({ message: "Unauthorized!" });
       }
       req.user = user;
