@@ -69,6 +69,13 @@ module.exports = async function (app) {
           //   roles: authorities,
           //   accessToken: token,
           // });
+          console.log({
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            roles: authorities,
+            accessToken: bearertoken,
+          });
           return {
             id: user._id,
             username: user.username,
