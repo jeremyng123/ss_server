@@ -68,7 +68,7 @@ module.exports = async function (app) {
       req.user = query;
       console.log("query: " + JSON.stringify(query));
       console.log("req.user: " + JSON.stringify(req.user));
-      return res.status(200).send(user);
+      return res.status(200).send(req.user);
     });
   });
 };
