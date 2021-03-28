@@ -40,6 +40,7 @@ module.exports = async function (app) {
         console.log(user);
         return res.status(401).send({ message: "Unauthorized!" });
       }
+      console.log("verify user: " + JSON.stringify(user));
       const query = await User.findOne({
         id: user.id,
       })
