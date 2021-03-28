@@ -47,6 +47,7 @@ module.exports = async function (app) {
         .populate("roles", "-__v")
         .exec((err, user) => {
           if (err) {
+            console.log(err);
             res.status(500).send({ message: err });
             return;
           }
