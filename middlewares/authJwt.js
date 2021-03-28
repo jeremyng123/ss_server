@@ -37,7 +37,7 @@ isAdmin = (req, res, next) => {
           res.status(500).send({ message: err });
           return;
         }
-
+        var authorities = [];
         for (let i = 0; i < roles.length; i++) {
           if (roles[i].name === "admin") {
             next();
