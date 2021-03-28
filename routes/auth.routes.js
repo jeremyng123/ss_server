@@ -25,7 +25,7 @@ module.exports = function (app) {
   );
 
   app.post("/login", controller.login);
-  app.get("/getUser", (req, res, next) => {
+  app.get("/getUser", async function (req, res, next) {
     let bearerheader = req.headers.authorization;
     console.log("token: " + bearerheader);
     const bearer = bearerheader.split(" ");
@@ -40,10 +40,11 @@ module.exports = function (app) {
         console.log(user);
         return res.status(401).send({ message: "Unauthorized!" });
       }
-      User.findOne({
+      const query = User.findOne({
         id: user.id,
       })
-        .populate("roles", "-__v")
+        .populate("roles", "-__v");
+      await query
         .exec((err, user) => {
           if (err) {
             res.status(500).send({ message: err });
@@ -56,15 +57,19 @@ module.exports = function (app) {
           for (let i = 0; i < user.roles.length; i++) {
             authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
           }
-          req.user = {
+          
+          return {
             id: user._id,
             username: user.username,
             email: user.email,
             roles: authorities,
             accessToken: token,
           };
-          return;
-        });
+        }).then(
+          (theuser) => {
+            req.user = theuser
+          }
+        );
       console.log("user: " + JSON.stringify(user));
       console.log("req.user: " + JSON.stringify(req.user));
       return res.status(200).send(user);
