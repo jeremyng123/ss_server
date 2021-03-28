@@ -65,7 +65,8 @@ module.exports = function (app) {
           };
           return;
         });
-      console.log("user: " + user);
+      console.log("user: " + JSON.stringify(user));
+      console.log("req.user: " + JSON.stringify(req.user));
       return res.status(200).send(user);
     });
   });
