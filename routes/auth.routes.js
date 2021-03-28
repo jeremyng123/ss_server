@@ -1,5 +1,7 @@
 const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
+var jwt = require("jsonwebtoken");
+const config = require("../config/auth.config");
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
