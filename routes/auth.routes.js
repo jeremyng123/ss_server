@@ -2,6 +2,9 @@ const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
 var jwt = require("jsonwebtoken");
 const config = require("../config/auth.config");
+const db = require("../models");
+const User = db.user;
+const Role = db.role;
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -37,7 +40,31 @@ module.exports = function (app) {
         console.log(user);
         return res.status(401).send({ message: "Unauthorized!" });
       }
-      req.user = user;
+      User.findOne({
+        id: user.id,
+      })
+        .populate("roles", "-__v")
+        .exec((err, user) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+
+          if (!user) {
+            return res.status(404).send({ message: "User Not found." });
+          }
+          for (let i = 0; i < user.roles.length; i++) {
+            authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+          }
+          req.user = {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            roles: authorities,
+            accessToken: token,
+          };
+          return;
+        });
       console.log(user);
       return res.status(200).send(user);
     });
