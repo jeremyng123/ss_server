@@ -40,7 +40,7 @@ module.exports = async function (app) {
         console.log(user);
         return res.status(401).send({ message: "Unauthorized!" });
       }
-      await User.findOne({
+      const query = await User.findOne({
         id: user.id,
       })
         .populate("roles", "-__v")
@@ -64,10 +64,8 @@ module.exports = async function (app) {
             roles: authorities,
             accessToken: token,
           };
-        })
-        .then((theuser) => {
-          req.user = theuser;
         });
+      req.user = query;
       console.log("user: " + JSON.stringify(user));
       console.log("req.user: " + JSON.stringify(req.user));
       return res.status(200).send(user);
