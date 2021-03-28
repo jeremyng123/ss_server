@@ -56,7 +56,7 @@ module.exports = async function (app) {
           for (let i = 0; i < user.roles.length; i++) {
             authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
           }
-          req.user = query;
+          // req.user = query;
           console.log("query: " + JSON.stringify(query));
           console.log("req.user: " + JSON.stringify(req.user));
           // return res.status(200).send(query);
