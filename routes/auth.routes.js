@@ -40,10 +40,10 @@ module.exports = async function (app) {
         console.log(user);
         return res.status(401).send({ message: "Unauthorized!" });
       }
-      const query = await User.findOne({
+      await User.findOne({
         id: user.id,
-      }).populate("roles", "-__v");
-      await query
+      })
+        .populate("roles", "-__v")
         .exec((err, user) => {
           if (err) {
             res.status(500).send({ message: err });
