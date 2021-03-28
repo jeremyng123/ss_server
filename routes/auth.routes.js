@@ -22,7 +22,7 @@ module.exports = function (app) {
   app.post("/login", controller.login);
   app.post("/getUser", (req, res, next) => {
     let token = req.headers["x-access-token"];
-
+    console.log("token: " + token);
     if (!token) {
       return res.status(403).send({ message: "No token provided!" });
     }
