@@ -14,8 +14,8 @@ const Role = db.role;
 
 db.mongoose
   .connect(
-    // `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@${dbConfig.HOST}`,
-    `mongodb://localhost:27017/ss_project`,
+    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@${dbConfig.HOST}`,
+    // `mongodb://localhost:27017/ss_project`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
