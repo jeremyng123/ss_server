@@ -40,7 +40,7 @@ module.exports = async function (app) {
         console.log(user);
         return res.status(401).send({ message: "Unauthorized!" });
       }
-      const query = User.findOne({
+      const query = await User.findOne({
         id: user.id,
       }).populate("roles", "-__v");
       await query
